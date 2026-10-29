@@ -1,0 +1,27 @@
+services:
+  booktures:
+    build:
+      context: .
+      args:
+        EXTRAS: "anthropic" # or "local" to bundle SD-Turbo (CPU only in Docker, slow)
+    image: booktures:2.0.0
+    ports:
+      - "8765:8765"
+    volumes:
+      - booktures-data:/data
+      # Drop-in plugins: put .py files in ./plugins
+      - ./plugins:/plugins:ro
+    environment:
+      BOOKTURES_PLUGINS: /plugins
+      # Keys can also be set in the web app under Models & plugins.
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    # Lets the container reach Ollama, ComfyUI or SD WebUI running on the host
+    # at http://host.docker.internal:<port>.
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+volumes:
+  booktures-data:

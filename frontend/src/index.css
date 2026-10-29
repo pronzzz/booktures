@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
+  --font-serif: "Literata Variable", ui-serif, Georgia, serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink-950: #0f0d0b;
+  --color-ink-900: #15120f;
+  --color-ink-850: #1b1814;
+  --color-ink-800: #231f1a;
+  --color-ink-700: #2f2a23;
+  --color-ink-600: #403930;
+  --color-paper: #efe6d6;
+  --color-paper-dim: #cdc1ac;
+  --color-muted: #9a8e78;
+  --color-ember: #e5a55b;
+  --color-ember-bright: #f2bb76;
+  --color-sea: #7fb8a8;
+  --color-rose: #e27a66;
+}
+
+@layer base {
+  html { color-scheme: dark; }
+  body {
+    @apply bg-ink-950 text-paper font-sans antialiased;
+    background-image:
+      radial-gradient(1200px 600px at 85% -10%, rgb(229 165 91 / 0.07), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, rgb(127 184 168 / 0.05), transparent 60%);
+    background-attachment: fixed;
+  }
+  ::selection { background: rgb(229 165 91 / 0.35); }
+  :focus-visible { outline: 2px solid var(--color-ember); outline-offset: 2px; }
+}
+
+/* Reader themes apply to the text column only. */
+.theme-night { --r-bg: #13110e; --r-ink: #e9dfcd; --r-dim: #8f846f; --r-line: #2c2720; --r-accent: #e5a55b; }
+.theme-sepia { --r-bg: #f3e9d4; --r-ink: #3a2e1f; --r-dim: #8a7656; --r-line: #dccdb0; --r-accent: #9a5a12; }
+.theme-paper { --r-bg: #fbfaf7; --r-ink: #24221f; --r-dim: #7b766d; --r-line: #e7e3da; --r-accent: #a35a0c; }
+
+.thin-scroll { scrollbar-width: thin; scrollbar-color: var(--r-line, #3d362c) transparent; }
+
+.shimmer {
+  background: linear-gradient(110deg, #1b1814 8%, #2a251f 18%, #1b1814 33%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+@keyframes shimmer { to { background-position-x: -200%; } }
+
+.kenburns { animation: kenburns 24s ease-in-out infinite alternate; }
+@keyframes kenburns { from { transform: scale(1.02) translate(0, 0); } to { transform: scale(1.12) translate(-1.5%, -1%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .kenburns, .shimmer { animation: none; }
+  * { transition-duration: 0ms !important; }
+}
